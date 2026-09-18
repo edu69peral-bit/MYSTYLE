@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MyStyle - Tienda</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+:root{--pink:#c65382;--pink2:#8d3159;--cream:#fff8f5;--ink:#211b20;--muted:#766c72;--line:#eee3e6;--green:#159447}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:'DM Sans',Arial,sans-serif;background:var(--cream);color:var(--ink)}
+header{background:rgba(255,255,255,.94);backdrop-filter:blur(14px);padding:15px 5%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #eadfe3;position:sticky;top:0;z-index:20}
+.logo{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;letter-spacing:-.5px}.logo span{color:var(--pink)}
+header button{box-shadow:0 7px 18px #00000012}
+button,.btn{border:0;border-radius:999px;padding:12px 18px;cursor:pointer;font-weight:700;background:var(--ink);color:#fff;text-decoration:none;display:inline-block;transition:.2s transform,.2s box-shadow}
+button:hover,.btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px #00000018}.btn-light{background:#f5e5ec;color:var(--pink2)}.btn-green{background:var(--green)}.btn-danger{background:#b83232}.btn-gray{background:#777}
+.hero{position:relative;overflow:hidden;padding:78px 5%;background:radial-gradient(circle at 85% 25%,#fff 0 12%,transparent 32%),linear-gradient(135deg,#f6dfe9,#fff7f3 48%,#f8e9df);display:grid;grid-template-columns:1.2fr .8fr;gap:45px;align-items:center;min-height:510px}
+.hero:before,.hero:after{content:'';position:absolute;border-radius:50%;filter:blur(2px);opacity:.45}.hero:before{width:260px;height:260px;background:#e9a8bf;right:-90px;top:-70px}.hero:after{width:190px;height:190px;background:#f1c89d;left:-80px;bottom:-80px}
+.hero>div{position:relative;z-index:1}.eyebrow{display:inline-block;padding:8px 13px;border-radius:99px;background:#fff;color:var(--pink2);font-weight:800;font-size:12px;letter-spacing:1.2px;text-transform:uppercase;box-shadow:0 7px 20px #0000000d}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(44px,6vw,78px);line-height:.98;margin:18px 0 18px;max-width:720px}.hero h1 em{color:var(--pink);font-style:normal}.hero p{font-size:18px;line-height:1.7;color:#5f555b;max-width:650px}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.hero-card{background:rgba(255,255,255,.78);backdrop-filter:blur(12px);padding:28px;border:1px solid #fff;border-radius:30px;box-shadow:0 24px 55px #6b3b4a1a}.hero-card .big{font-family:'Playfair Display',serif;font-size:28px;margin:0 0 10px}
+.trust{display:flex;gap:25px;flex-wrap:wrap;margin-top:28px;color:#5e545a;font-size:13px;font-weight:700}.trust span:before{content:'✓';color:var(--green);margin-right:7px}
+.wrap{max-width:1240px;margin:auto;padding:45px 5%}.section-title{text-align:center;margin-bottom:25px}.section-title h2{font-family:'Playfair Display',serif;font-size:40px;margin:0 0 7px}.section-title p{color:var(--muted)}
+.categories{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin:25px 0}.categories button{font-size:13px}
+.search{width:100%;padding:15px 18px;border:1px solid var(--line);border-radius:999px;font-size:16px;background:#fff;outline:none;box-shadow:0 8px 25px #00000007}.search:focus{border-color:#d89ab3}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:22px;margin-top:18px}
+.card{background:#fff;border-radius:24px;overflow:hidden;border:1px solid #eee5e7;box-shadow:0 12px 30px #00000009;transition:.25s}.card:hover{transform:translateY(-6px);box-shadow:0 20px 38px #00000012}
+.card img,.noimg{width:100%;height:245px;object-fit:cover}.noimg{display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f5e6ec,#fff);font-size:55px}
+.card-body{padding:18px}.tag{display:inline-block;padding:6px 10px;border-radius:20px;background:#f8e4ec;color:var(--pink2);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}.card h3{font-family:'Playfair Display',serif;font-size:23px;margin:10px 0 7px}.desc{color:#746b70;min-height:42px;font-size:14px;line-height:1.5}.price{font-size:22px;font-weight:800;margin:13px 0 3px}.stock{font-size:12px;color:#8a8085}
+.panel{display:none;background:#fff;border:1px solid #e8dfe2;border-radius:24px;padding:26px;margin-top:35px;box-shadow:0 15px 40px #00000009}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:flex;flex-direction:column;gap:7px;font-weight:700;font-size:13px}.full{grid-column:1/-1}
+input,select,textarea{padding:13px;border:1px solid #ddd1d5;border-radius:12px;font:inherit;background:#fff}textarea{min-height:90px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+.admin-item{display:flex;justify-content:space-between;gap:15px;padding:14px 0;border-bottom:1px solid #eee}.admin-actions{display:flex;gap:7px}.notice{background:#fff7df;padding:13px;border-radius:12px;margin:15px 0;color:#6d5815}
+.marketing{margin:20px 0 0;background:#211b20;color:#fff;border-radius:28px;padding:35px;display:flex;justify-content:space-between;gap:25px;align-items:center}.marketing h2{font-family:'Playfair Display',serif;font-size:34px;margin:0 0 8px}.marketing p{color:#ddd;margin:0}
+footer{padding:45px 5%;text-align:center;color:#8a7d83;background:#fff;margin-top:35px}.float{position:fixed;right:20px;bottom:20px;border-radius:999px;z-index:15;box-shadow:0 12px 30px #00000022}
+@media(max-width:760px){.hero{grid-template-columns:1fr;padding:55px 5%}.hero-card{display:none}.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.admin-item{flex-direction:column}.marketing{flex-direction:column;align-items:flex-start}}
+</style>
+<style>
+.cart-drawer{position:fixed;inset:0;z-index:9999;pointer-events:none}.cart-overlay{position:absolute;inset:0;background:#0006;opacity:0;transition:.25s}.cart-panel{position:absolute;right:0;top:0;height:100%;width:min(430px,92vw);background:#fffafc;box-shadow:-12px 0 35px #0003;transform:translateX(105%);transition:.3s;display:flex;flex-direction:column}.cart-drawer.open{pointer-events:auto}.cart-drawer.open .cart-overlay{opacity:1}.cart-drawer.open .cart-panel{transform:translateX(0)}.cart-head{display:flex;justify-content:space-between;align-items:center;padding:22px;border-bottom:1px solid #eee}.cart-head strong{display:block;font-size:1.2rem}.cart-head small{color:#777}.cart-close{border:0;border-radius:50%;width:38px;height:38px;font-size:25px;cursor:pointer}.cart-items{padding:14px 18px;overflow:auto;flex:1}.cart-row{display:grid;grid-template-columns:62px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid #eee}.cart-row img{width:62px;height:62px;object-fit:cover;border-radius:12px;background:#f4e8ee}.cart-row h4{margin:0 0 5px}.cart-price{font-weight:700}.qty{display:flex;align-items:center;gap:7px;margin-top:7px}.qty button{border:0;width:27px;height:27px;border-radius:7px;cursor:pointer}.remove-item{border:0;background:none;color:#a34d6c;cursor:pointer}.cart-empty{text-align:center;padding:55px 25px;color:#777}.cart-foot{padding:18px;border-top:1px solid #eee;background:#fff}.cart-total{display:flex;justify-content:space-between;font-size:1.12rem;margin-bottom:12px}.cart-wa{width:100%;border:0;cursor:pointer}.cart-clear{width:100%;margin-top:9px;border:0;background:none;color:#777;cursor:pointer}.floating-cart{position:fixed;right:22px;bottom:88px;z-index:3000;border:0;border-radius:50%;width:58px;height:58px;background:#1d1720;color:white;font-size:24px;box-shadow:0 8px 25px #0003;cursor:pointer}.floating-cart b{position:absolute;right:-3px;top:-4px;background:#d94d7c;color:#fff;border-radius:20px;min-width:21px;height:21px;font-size:12px;display:grid;place-items:center}.add-cart-btn{width:100%;margin-top:9px;border:0;border-radius:12px;padding:11px;background:#f1d6e1;color:#5a233b;font-weight:700;cursor:pointer}@media(max-width:600px){.floating-cart{right:15px;bottom:78px}.cart-panel{width:100%}}
+</style></head>
+<body>
+<header><div class="logo">My<span>Style</span></div><button id="openAdmin">⚙️ Administrar</button></header>
+
+<section class="hero">
+<div><span class="eyebrow">MY STYLE · BELLEZA & CUIDADO</span>
+<h1>Tu belleza.<br><em>Tu estilo.</em> Tu momento.</h1>
+<p>Descubre productos seleccionados para hacerte sentir increíble todos los días. Perfumes, maquillaje, cuidado corporal y kits BIOAQUA.</p>
+<div class="hero-actions"><a id="heroWA" class="btn btn-green" target="_blank">💬 Pedir por WhatsApp</a><a href="#catalogo" id="viewCatalogBtn" class="btn btn-light">✨ Ver catálogo</a></div>
+<div class="trust"><span>Atención por WhatsApp</span><span>Catálogo actualizado</span><span>Compra fácil</span></div></div>
+<div class="hero-card"><div style="font-size:46px">🎁</div><p class="big">Un detalle que sí sorprende.</p><p>Cuéntanos para quién es y te ayudamos a encontrar una opción especial.</p><a id="giftWA" class="btn btn-light" target="_blank">💬 Quiero asesoría</a></div>
+</section>
+
+<main id="catalogo" class="wrap">
+<div class="section-title">
+<span class="eyebrow">✨ COLECCIÓN MY STYLE</span><h2>Encuentra tus favoritos</h2><p>Explora nuestras categorías y descubre tu próximo producto favorito.</p></div>
+<div id="catalogCategories" class="categories"></div>
+<input id="search" class="search" placeholder="🔎 Buscar producto...">
+<div id="count"></div><div id="grid" class="grid"></div>
+
+<section style="margin:25px 0;padding:12px 18px;border-radius:999px;background:linear-gradient(90deg,#f8dce8,#fff,#f6e3d5);text-align:center;font-weight:800;color:#8d3159;box-shadow:0 8px 22px #00000008">✨ NUEVO · Descubre productos para consentirte y regalar ✨</section>
+<section class="marketing"><div><h2>¿Ya encontraste tu favorito?</h2><p>Haz tu pedido directamente por WhatsApp y recibe atención personalizada.</p></div><a class="btn btn-green" target="_blank" href="https://wa.me/573212338909?text=Hola%2C%20me%20gustar%C3%ADa%20realizar%20un%20pedido.">💬 Hacer mi pedido</a></section>
+<section id="admin" class="panel">
+<h2>⚙️ Administrar productos</h2>
+<div class="notice">Los productos se guardan en este navegador. Usa <b>Exportar</b> para hacer una copia y <b>Importar</b> para recuperarla.</div>
+<h3>📂 Categorías del catálogo</h3>
+<div class="actions" style="margin-bottom:15px">
+  <input id="newCat" placeholder="Ej. Cuidado facial" style="min-width:240px">
+  <button id="addCat" class="btn-light" type="button">➕ Agregar categoría</button>
+</div>
+<div id="categoryList" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px"></div>
+<div class="formgrid">
+<input id="productId" type="hidden">
+<label class="field">Nombre<input id="productName"></label>
+<label class="field">Categoría<select id="productCat"><option>Perfumes Dama</option><option>Perfumes Hombre</option><option>Maquillaje</option><option>Mantequillas Corporales</option><option>BIOAQUA</option></select></label>
+<label class="field">Precio (COP)<input id="productPrice" type="number" min="0"></label>
+<label class="field">Cantidad / stock<input id="productStock" type="number" min="0"></label>
+<label class="field">Etiqueta<select id="productTag"><option>Normal</option><option>Nuevo</option><option>Oferta</option><option>Más vendido</option></select></label>
+<label class="field">Foto<input id="productPhoto" type="file" accept="image/*"></label>
+<label class="field full">Descripción<textarea id="productDesc"></textarea></label>
+</div>
+<div class="actions">
+<button id="saveBtn">💾 Guardar producto</button><button id="clearBtn" class="btn-gray">Limpiar</button>
+<button id="exportBtn" class="btn-light">⬇️ Exportar</button>
+<label class="btn btn-light">⬆️ Importar<input id="importFile" type="file" accept=".json" hidden></label>
+<button id="closeAdmin" class="btn-gray">Cerrar</button>
+</div>
+<hr><h3>Productos guardados</h3><div id="adminList"></div>
+</section>
+</main>
+<footer style="padding:30px;text-align:center;color:#777">MyStyle · Belleza y cuidado personal</footer>
+<a id="floatWA" class="btn btn-green float" target="_blank">💬 WhatsApp</a>
+
+<script>
+(function(){
+const KEY='mystyle_inventory_v3', PHONE='573212338909';
+const $=id=>document.getElementById(id);
+const e={
+admin:$('admin'),openAdmin:$('openAdmin'),closeAdmin:$('closeAdmin'),grid:$('grid'),count:$('count'),search:$('search'),catalogCategories:$('catalogCategories'),newCat:$('newCat'),addCat:$('addCat'),categoryList:$('categoryList'),
+id:$('productId'),name:$('productName'),cat:$('productCat'),price:$('productPrice'),stock:$('productStock'),
+tag:$('productTag'),photo:$('productPhoto'),desc:$('productDesc'),list:$('adminList'),save:$('saveBtn'),
+clear:$('clearBtn'),export:$('exportBtn'),importFile:$('importFile'),heroWA:$('heroWA'),giftWA:$('giftWA'),floatWA:$('floatWA')
+};
+let products=[], oldPhoto='';
+const DEFAULT_CATEGORIES=['Perfumes Dama','Perfumes Hombre','Maquillaje','Mantequillas Corporales','BIOAQUA'];
+let categories=[];
+try{categories=JSON.parse(localStorage.getItem('mystyle_categories_v1')||'null')||DEFAULT_CATEGORIES.slice()}catch(x){categories=DEFAULT_CATEGORIES.slice()}
+function saveCategories(){try{localStorage.setItem('mystyle_categories_v1',JSON.stringify(categories));return true}catch(x){return false}}
+try{products=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(x){products=[]}
+const money=n=>new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:0}).format(Number(n)||0);
+const wa=t=>'https://wa.me/573212338909?text='+encodeURIComponent(t);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+
+function persist(){
+try{localStorage.setItem(KEY,JSON.stringify(products));return true}
+catch(x){alert('No se pudo guardar. La imagen puede ser demasiado grande.');return false}
+}
+function renderCategories(){
+e.catalogCategories.innerHTML='<button class="btn-light" data-cat="">Todos</button>'+categories.map(c=>'<button class="btn-light" data-cat="'+esc(c)+'">'+esc(c)+'</button>').join('');
+e.catalogCategories.querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>{e.search.value=b.dataset.cat;render(b.dataset.cat)});
+e.cat.innerHTML=categories.map(c=>'<option>'+esc(c)+'</option>').join('');
+e.categoryList.innerHTML=categories.map(c=>'<span class="tag">'+esc(c)+'</span>').join('');
+}
+function addCategory(){
+const c=e.newCat.value.trim();
+if(!c)return alert('Escribe el nombre de la nueva categoría.');
+if(categories.some(x=>x.toLowerCase()===c.toLowerCase()))return alert('Esa categoría ya existe.');
+categories.push(c);saveCategories();e.newCat.value='';renderCategories();e.cat.value=c;alert('✅ Categoría agregada.');
+}
+function render(q=''){
+q=String(q).toLowerCase();
+const a=products.filter(p=>(p.name+' '+p.cat+' '+p.desc).toLowerCase().includes(q));
+e.count.textContent=a.length+' producto'+(a.length===1?'':'s');
+e.grid.innerHTML=a.length?a.map(p=>'<article class="card">'+(p.photo?'<img src="'+p.photo+'" alt="'+esc(p.name)+'">':'<div class="noimg">🛍️</div>')+
+'<div class="card-body"><span class="tag">'+esc(p.tag)+'</span><h3>'+esc(p.name)+'</h3><div class="desc">'+esc(p.desc)+'</div><div class="price">'+money(p.price)+'</div><div>Stock: '+Number(p.stock||0)+'</div><br><a class="btn btn-green" target="_blank" href="'+wa('Hola, me gustaría realizar un pedido. Producto: '+p.name+' - '+money(p.price))+'">Comprar</a></div></article>').join(''):'<p>No hay productos todavía. Pulsa ⚙️ Administrar para agregar uno.</p>';
+}
+function renderAdmin(){
+e.list.innerHTML=products.length?products.map(p=>'<div class="admin-item"><div><b>'+esc(p.name)+'</b><br><small>'+esc(p.cat)+' · '+money(p.price)+' · Stock: '+Number(p.stock||0)+'</small></div><div class="admin-actions"><button class="btn-light" data-edit="'+esc(p.id)+'">✏️ Editar</button><button class="btn-danger" data-delete="'+esc(p.id)+'">🗑️ Eliminar</button></div></div>').join(''):'<p>No hay productos guardados.</p>';
+}
+function clearForm(){e.id.value='';e.name.value='';e.price.value='';e.stock.value='';e.desc.value='';e.tag.value='Normal';e.cat.selectedIndex=0;e.photo.value='';oldPhoto='';e.save.textContent='💾 Guardar producto'}
+function saveProduct(){
+if(!e.name.value.trim()){alert('Escribe el nombre del producto.');e.name.focus();return}
+const pid=e.id.value||Date.now().toString();
+const p={id:pid,name:e.name.value.trim(),cat:e.cat.value,price:Number(e.price.value)||0,stock:Number(e.stock.value)||0,tag:e.tag.value,desc:e.desc.value.trim(),photo:oldPhoto};
+const finish=()=>{const i=products.findIndex(x=>String(x.id)===String(pid));if(i>=0)products[i]=p;else products.push(p);if(persist()){clearForm();render(e.search.value);renderAdmin();alert('✅ Producto guardado correctamente.')}};
+const f=e.photo.files[0];if(f){const r=new FileReader();r.onload=()=>{p.photo=r.result;finish()};r.onerror=()=>alert('No se pudo leer la imagen.');r.readAsDataURL(f)}else finish();
+}
+function editProduct(id){const p=products.find(x=>String(x.id)===String(id));if(!p)return;e.id.value=p.id;e.name.value=p.name;e.cat.value=p.cat;e.price.value=p.price;e.stock.value=p.stock;e.tag.value=p.tag;e.desc.value=p.desc;oldPhoto=p.photo||'';e.photo.value='';e.save.textContent='💾 Actualizar producto';e.name.focus()}
+function deleteProduct(id){const p=products.find(x=>String(x.id)===String(id));if(p&&confirm('¿Eliminar "'+p.name+'"?')){products=products.filter(x=>String(x.id)!==String(id));if(persist()){render(e.search.value);renderAdmin()}}}
+function exportProducts(){const b=new Blob([JSON.stringify(products,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='mystyle_productos.json';a.click();URL.revokeObjectURL(u)}
+function importProducts(f){if(!f)return;const r=new FileReader();r.onload=()=>{try{const data=JSON.parse(r.result);if(!Array.isArray(data))throw 0;if(confirm('Esto reemplazará los productos actuales. ¿Continuar?')){products=data;if(persist()){render(e.search.value);renderAdmin();alert('✅ Productos importados.')}}}catch(x){alert('El archivo no es válido.')}e.importFile.value=''};r.readAsText(f)}
+
+e.openAdmin.onclick=()=>{e.admin.style.display='block';renderAdmin();e.admin.scrollIntoView({behavior:'smooth'})};
+const viewCatalogBtn=document.getElementById('viewCatalogBtn');
+if(viewCatalogBtn)viewCatalogBtn.addEventListener('click',function(ev){ev.preventDefault();document.getElementById('catalogo').scrollIntoView({behavior:'smooth',block:'start'});});
+e.closeAdmin.onclick=()=>e.admin.style.display='none';
+e.save.onclick=saveProduct;e.clear.onclick=clearForm;e.export.onclick=exportProducts;
+e.importFile.onchange=x=>importProducts(x.target.files[0]);e.search.oninput=x=>render(x.target.value);
+e.list.onclick=x=>{const a=x.target.closest('[data-edit]'),b=x.target.closest('[data-delete]');if(a)editProduct(a.dataset.edit);if(b)deleteProduct(b.dataset.delete)};
+e.addCat.onclick=addCategory;
+e.newCat.addEventListener('keydown',x=>{if(x.key==='Enter')addCategory();});
+e.heroWA.href=wa('Hola, me gustaría realizar un pedido.');
+e.giftWA.href=wa('Hola, me gustaría realizar un pedido.');
+e.floatWA.href=wa('Hola, me gustaría realizar un pedido.');
+renderCategories();
+render();
+})();
+</script>
+<div id="cartDrawer" class="cart-drawer" aria-hidden="true"><div class="cart-overlay" id="cartOverlay"></div><aside class="cart-panel"><div class="cart-head"><div><strong>🛒 Tu pedido</strong><small id="cartCountLabel">0 productos</small></div><button class="cart-close" id="closeCart">×</button></div><div id="cartItems" class="cart-items"></div><div class="cart-empty" id="cartEmpty">Tu carrito está vacío.<br>Agrega productos para comenzar.</div><div class="cart-foot"><div class="cart-total"><span>Total</span><strong id="cartTotal">$0</strong></div><button class="btn btn-primary cart-wa" id="checkoutWhatsApp">📲 Pedir por WhatsApp</button><button class="cart-clear" id="clearCart">Vaciar carrito</button></div></aside></div><button class="floating-cart" id="openCart">🛒<b id="cartBadge">0</b></button><script>
+(()=>{const WA='573212338909',KEY='mystyle_cart_v1';let cart=JSON.parse(localStorage.getItem(KEY)||'[]');const money=n=>new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:0}).format(+n||0),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));function save(){localStorage.setItem(KEY,JSON.stringify(cart));render();}function open(){cartDrawer.classList.add('open')}function close(){cartDrawer.classList.remove('open')}function add(x){let f=cart.find(i=>i.id===x.id);f?f.qty++:cart.push({...x,qty:1});save();open()}function change(id,d){let x=cart.find(i=>i.id===id);if(!x)return;x.qty+=d;if(x.qty<1)cart=cart.filter(i=>i.id!==id);save()}function render(){let n=cart.reduce((a,x)=>a+x.qty,0),t=cart.reduce((a,x)=>a+x.price*x.qty,0);cartBadge.textContent=n;cartCountLabel.textContent=n+' '+(n===1?'producto':'productos');cartTotal.textContent=money(t);cartEmpty.style.display=cart.length?'none':'block';cartItems.innerHTML=cart.map(x=>`<div class="cart-row"><img src="${esc(x.image)}"><div><h4>${esc(x.name)}</h4><div class="cart-price">${money(x.price)}</div><div class="qty"><button data-m="${esc(x.id)}">−</button><span>${x.qty}</span><button data-p="${esc(x.id)}">+</button><button class="remove-item" data-r="${esc(x.id)}">Eliminar</button></div></div></div>`).join('');cartItems.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>change(b.dataset.m,-1));cartItems.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>change(b.dataset.p,1));cartItems.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{cart=cart.filter(x=>x.id!==b.dataset.r);save()})}function products(){return [...document.querySelectorAll('.product-card')].map((card,i)=>{let name=card.querySelector('h3,h4,.product-name,.title')?.textContent?.trim()||'Producto '+(i+1),pt=card.querySelector('.price,.product-price,[class*="price"]')?.textContent||'0',m=pt.replace(/\./g,'').match(/\d+/g);return {card,id:name,name,price:m?+m.join(''):0,image:card.querySelector('img')?.src||''}})}function buttons(){products().forEach(p=>{let b=p.card.querySelector('.add-cart-btn');if(!b){b=document.createElement('button');b.className='add-cart-btn';b.textContent='🛒 Agregar al carrito';p.card.appendChild(b)}b.onclick=()=>add({id:p.id,name:p.name,price:p.price,image:p.image})})}function checkout(){if(!cart.length)return alert('Agrega al menos un producto al carrito.');let s='Hola, me gustaría realizar un pedido en MyStyle.%0A%0A';cart.forEach(x=>s+=`• ${encodeURIComponent(x.name)} x${x.qty} — ${encodeURIComponent(money(x.price*x.qty))}%0A`);let t=cart.reduce((a,x)=>a+x.price*x.qty,0);s+=`%0A*Total: ${encodeURIComponent(money(t))}*`;window.open('https://wa.me/'+WA+'?text='+s,'_blank')}document.addEventListener('DOMContentLoaded',()=>{openCart.onclick=open;closeCart.onclick=close;cartOverlay.onclick=close;clearCart.onclick=()=>{cart=[];save()};checkoutWhatsApp.onclick=checkout;render();buttons();new MutationObserver(buttons).observe(document.body,{childList:true,subtree:true})})})();
+</script></body>
+</html>
