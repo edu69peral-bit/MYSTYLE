@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://edu69peral-bit.github.io/MYSTYLE/sitemap.xml
