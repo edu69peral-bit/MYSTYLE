@@ -39,7 +39,7 @@ footer{padding:45px 5%;text-align:center;color:#8a7d83;background:#fff;margin-to
 .lightbox{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;padding:25px}.lightbox.open{display:flex}.lightbox img{max-width:92vw;max-height:88vh;object-fit:contain;border-radius:16px;box-shadow:0 20px 60px #0008}.lightbox-close{position:absolute;top:18px;right:22px;width:44px;height:44px;border:0;border-radius:50%;font-size:30px;cursor:pointer;background:#fff;color:#222}.card img{cursor:zoom-in}</style>
 </head>
 <body>
-<header><div class="logo">My<span>Style</span></div><button id="openAdmin">⚙️ Administrar</button></header>
+<header><div class="logo">My<span>Style</span></div></header>
 
 <section class="hero">
 <div><span class="eyebrow">MY STYLE · BELLEZA & CUIDADO</span>
@@ -187,7 +187,9 @@ async function openAdmin(){e.admin.style.display='block';e.admin.scrollIntoView(
 async function login(){e.loginMsg.textContent='';const email=e.adminEmail.value.trim(),password=e.adminPassword.value;if(!email||!password){e.loginMsg.textContent='Escribe correo y contraseña.';return}e.loginBtn.disabled=true;e.loginBtn.textContent='⏳ Entrando...';const {data,error}=await supabase.auth.signInWithPassword({email,password});e.loginBtn.disabled=false;e.loginBtn.textContent='🔐 Iniciar sesión';if(error){e.loginMsg.textContent='No se pudo iniciar sesión: '+error.message;return}e.adminPassword.value='';e.loginBox.style.display='none';e.adminTools.style.display='block';e.adminUser.textContent='Sesión: '+(data.user?.email||email);await loadProducts();await migrateLocalIfNeeded();renderAdmin()}
 async function logout(){await supabase.auth.signOut();e.adminTools.style.display='none';e.loginBox.style.display='block';e.loginMsg.textContent='Sesión cerrada.'}
 
-e.openAdmin.onclick=openAdmin;
+const adminLink=new URLSearchParams(location.search).get('admin');
+if(adminLink==='1'){openAdmin();}
+
 const viewCatalogBtn=document.getElementById('viewCatalogBtn');if(viewCatalogBtn)viewCatalogBtn.addEventListener('click',function(ev){ev.preventDefault();document.getElementById('catalogo').scrollIntoView({behavior:'smooth',block:'start'});});
 e.closeAdmin.onclick=()=>e.admin.style.display='none';e.save.onclick=saveProduct;e.clear.onclick=clearForm;e.export.onclick=exportProducts;e.importFile.onchange=x=>importProducts(x.target.files[0]);e.search.oninput=x=>render(x.target.value);e.loginBtn.onclick=login;e.logoutBtn.onclick=logout;e.bulkDeleteBtn.onclick=bulkDelete;e.selectAll.onchange=()=>{e.list.querySelectorAll('input[data-select]').forEach(x=>x.checked=e.selectAll.checked);updateSelectionUI()};e.list.onclick=x=>{const a=x.target.closest('[data-edit]'),b=x.target.closest('[data-delete]');if(a)editProduct(a.dataset.edit);if(b)deleteProduct(b.dataset.delete)};e.list.onchange=x=>{if(x.target.matches('input[data-select]'))updateSelectionUI()};
 supabase.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_OUT'){e.adminTools.style.display='none';e.loginBox.style.display='block'} });
