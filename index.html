@@ -77,6 +77,15 @@ footer{padding:45px 5%;text-align:center;color:#8a7d83;background:#fff;margin-to
   <span id="adminUser" style="font-size:13px;color:#6d6268"></span>
   <button id="logoutBtn" class="btn-gray" type="button">Cerrar sesión</button>
 </div>
+<div style="margin:18px 0;padding:18px;border:1px solid #eee3e6;border-radius:18px;background:#fff8fb">
+<h3 style="margin:0 0 8px">🏷️ Administrar categorías</h3>
+<p style="margin:0 0 12px;color:#766c72;font-size:13px">Agrega nuevas categorías o elimina las que ya no quieras mostrar como botones del catálogo.</p>
+<div class="actions" style="margin-top:0">
+<input id="newCat" placeholder="Nueva categoría" style="flex:1;min-width:220px">
+<button id="addCat" type="button">➕ Agregar categoría</button>
+</div>
+<div id="categoryList" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"></div>
+</div>
 <div class="formgrid">
 <input id="productId" type="hidden">
 <label class="field">Nombre<input id="productName"></label>
@@ -129,10 +138,23 @@ const fromDb=p=>({id:String(p.id),name:p.name||'',cat:p.cat||'',price:Number(p.p
 function renderCategories(){
  e.catalogCategories.innerHTML='<button class="btn-light" data-cat="">Todos</button>'+categories.map(c=>'<button class="btn-light" data-cat="'+esc(c)+'">'+esc(c)+'</button>').join('');
  e.catalogCategories.querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>{e.search.value=b.dataset.cat;render(b.dataset.cat)});
- e.cat.innerHTML=categories.map(c=>'<option>'+esc(c)+'</option>').join('');
- if(e.categoryList)e.categoryList.innerHTML=categories.map(c=>'<span class="tag">'+esc(c)+'</span>').join('');
+ e.cat.innerHTML=categories.map(c=>'<option value="'+esc(c)+'">'+esc(c)+'</option>').join('');
+ if(e.categoryList){e.categoryList.innerHTML=categories.map(c=>'<span class="tag" style="display:inline-flex;align-items:center;gap:6px">'+esc(c)+' <button type="button" class="btn-danger" style="padding:5px 9px;font-size:11px" data-del-cat="'+esc(c)+'">🗑️</button></span>').join('');}
 }
-function addCategory(){const c=e.newCat.value.trim();if(!c)return alert('Escribe el nombre de la nueva categoría.');if(categories.some(x=>x.toLowerCase()===c.toLowerCase()))return alert('Esa categoría ya existe.');categories.push(c);saveCategories();e.newCat.value='';renderCategories();e.cat.value=c;alert('✅ Categoría agregada.');}
+function addCategory(){const c=(e.newCat?.value||'').trim();if(!c)return alert('Escribe el nombre de la nueva categoría.');if(categories.some(x=>x.toLowerCase()===c.toLowerCase()))return alert('Esa categoría ya existe.');categories.push(c);saveCategories();e.newCat.value='';renderCategories();e.cat.value=c;alert('✅ Categoría agregada.');}
+function deleteCategory(c){
+ if(categories.length<=1)return alert('Debes conservar al menos una categoría.');
+ const used=products.some(p=>(p.cat||'').toLowerCase()===c.toLowerCase());
+ if(used && !confirm('Esta categoría tiene productos. Si la eliminas, esos productos quedarán sin una categoría válida. ¿Continuar?')) return;
+ if(!confirm('¿Eliminar la categoría "'+c+'" del catálogo?')) return;
+ categories=categories.filter(x=>x.toLowerCase()!==c.toLowerCase());
+ saveCategories();
+ if(products.some(p=>(p.cat||'').toLowerCase()===c.toLowerCase())) products=products.map(p=>p.cat&&p.cat.toLowerCase()===c.toLowerCase()?{...p,cat:categories[0]}:p);
+ renderCategories();
+ if(e.cat.value===c)e.cat.value=categories[0];
+ renderAdmin();
+ alert('✅ Categoría eliminada.');
+}
 function render(q=''){
  q=String(q).toLowerCase();
  const a=products.filter(p=>(p.name+' '+p.cat+' '+p.desc).toLowerCase().includes(q));
@@ -151,7 +173,11 @@ function clearForm(){e.id.value='';e.name.value='';e.price.value='';e.stock.valu
 async function loadProducts(){
  const {data,error}=await supabase.from('products').select('id,name,cat,price,stock,tag,description,photo,created_at').order('created_at',{ascending:true});
  if(error){console.error(error);alert('No se pudieron cargar los productos desde Supabase. Revisa la conexión.');return false}
- products=(data||[]).map(fromDb); render(e.search.value); if(e.adminTools.style.display!=='none')renderAdmin(); return true;
+ products=(data||[]).map(fromDb);
+ const productCats=[...new Set(products.map(p=>String(p.cat||'').trim()).filter(Boolean))];
+ categories=[...DEFAULT_CATEGORIES,...productCats.filter(c=>!DEFAULT_CATEGORIES.some(d=>d.toLowerCase()===c.toLowerCase()))];
+ renderCategories();
+ render(e.search.value); if(e.adminTools.style.display!=='none')renderAdmin(); return true;
 }
 async function migrateLocalIfNeeded(){
  if(products.length) return;
@@ -185,8 +211,7 @@ async function logout(){await supabase.auth.signOut();e.adminTools.style.display
 
 e.openAdmin.onclick=openAdmin;
 const viewCatalogBtn=document.getElementById('viewCatalogBtn');if(viewCatalogBtn)viewCatalogBtn.addEventListener('click',function(ev){ev.preventDefault();document.getElementById('catalogo').scrollIntoView({behavior:'smooth',block:'start'});});
-e.closeAdmin.onclick=()=>e.admin.style.display='none';e.save.onclick=saveProduct;e.clear.onclick=clearForm;e.export.onclick=exportProducts;e.importFile.onchange=x=>importProducts(x.target.files[0]);e.search.oninput=x=>render(x.target.value);if(e.addCat)e.addCat.onclick=addCategory;if(e.newCat)e.newCat.addEventListener('keydown',x=>{if(x.key==='Enter')addCategory()});e.loginBtn.onclick=login;e.logoutBtn.onclick=logout;e.bulkDeleteBtn.onclick=bulkDelete;e.selectAll.onchange=()=>{e.list.querySelectorAll('input[data-select]').forEach(x=>x.checked=e.selectAll.checked);updateSelectionUI()};e.list.onclick=x=>{const a=x.target.closest('[data-edit]'),b=x.target.closest('[data-delete]');if(a)editProduct(a.dataset.edit);if(b)deleteProduct(b.dataset.delete)};e.list.onchange=x=>{if(x.target.matches('input[data-select]'))updateSelectionUI()};
-e.heroWA.href=wa('Hola, me gustaría realizar un pedido.');e.giftWA.href=wa('Hola, me gustaría realizar un pedido.');e.floatWA.href=wa('Hola, me gustaría realizar un pedido.');
+e.closeAdmin.onclick=()=>e.admin.style.display='none';e.save.onclick=saveProduct;e.clear.onclick=clearForm;e.export.onclick=exportProducts;e.importFile.onchange=x=>importProducts(x.target.files[0]);e.search.oninput=x=>render(x.target.value);e.loginBtn.onclick=login;e.logoutBtn.onclick=logout;e.bulkDeleteBtn.onclick=bulkDelete;e.selectAll.onchange=()=>{e.list.querySelectorAll('input[data-select]').forEach(x=>x.checked=e.selectAll.checked);updateSelectionUI()};e.list.onclick=x=>{const a=x.target.closest('[data-edit]'),b=x.target.closest('[data-delete]');if(a)editProduct(a.dataset.edit);if(b)deleteProduct(b.dataset.delete)};e.list.onchange=x=>{if(x.target.matches('input[data-select]'))updateSelectionUI()};if(e.addCat)e.addCat.onclick=addCategory;if(e.newCat)e.newCat.addEventListener('keydown',x=>{if(x.key==='Enter')addCategory()});if(e.categoryList)e.categoryList.onclick=x=>{const b=x.target.closest('[data-del-cat]');if(b)deleteCategory(b.dataset.delCat)};
 supabase.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_OUT'){e.adminTools.style.display='none';e.loginBox.style.display='block'} });
 const lightbox=$('lightbox'),lightboxImg=$('lightboxImg'),lightboxClose=$('lightboxClose');
 document.addEventListener('click',ev=>{const img=ev.target.closest('.card img');if(img){lightboxImg.src=img.src;lightboxImg.alt=img.alt||'Vista ampliada';lightbox.classList.add('open');lightbox.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'}});
