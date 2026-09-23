@@ -287,7 +287,7 @@ function closeLightbox(){lightbox.classList.remove('open');lightbox.setAttribute
 lightboxClose.onclick=closeLightbox;lightbox.onclick=ev=>{if(ev.target===lightbox)closeLightbox()};document.addEventListener('keydown',ev=>{if(ev.key==='Escape')closeLightbox()});
 loadProducts();
 renderCategories();
-  alert('CATEGORÍAS EJECUTADAS: ' + categories.join(' | '));
+ 
 })();
 </script>
 <div id="cartDrawer" class="cart-drawer" aria-hidden="true"><div class="cart-overlay" id="cartOverlay"></div><aside class="cart-panel"><div class="cart-head"><div><strong>🛒 Tu pedido</strong><small id="cartCountLabel">0 productos</small></div><button class="cart-close" id="closeCart">×</button></div><div id="cartItems" class="cart-items"></div><div class="cart-empty" id="cartEmpty">Tu carrito está vacío.<br>Agrega productos para comenzar.</div><div class="cart-foot"><div class="cart-total"><span>Total</span><strong id="cartTotal">$0</strong></div><button class="btn btn-primary cart-wa" id="checkoutWhatsApp">📲 Pedir por WhatsApp</button><button class="cart-clear" id="clearCart">Vaciar carrito</button></div></aside></div><button class="floating-cart" id="openCart">🛒<b id="cartBadge">0</b></button><script>
