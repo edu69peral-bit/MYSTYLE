@@ -134,6 +134,19 @@ admin:$('admin'),openAdmin:$('openAdmin'),closeAdmin:$('closeAdmin'),grid:$('gri
 id:$('productId'),name:$('productName'),cat:$('productCat'),price:$('productPrice'),stock:$('productStock'),tag:$('productTag'),photo:$('productPhoto'),desc:$('productDesc'),list:$('adminList'),save:$('saveBtn'),clear:$('clearBtn'),export:$('exportBtn'),importFile:$('importFile'),heroWA:$('heroWA'),giftWA:$('giftWA'),floatWA:$('floatWA'),loginBox:$('loginBox'),adminTools:$('adminTools'),adminEmail:$('adminEmail'),adminPassword:$('adminPassword'),loginBtn:$('loginBtn'),loginMsg:$('loginMsg'),logoutBtn:$('logoutBtn'),adminUser:$('adminUser'),bulkDeleteBtn:$('bulkDeleteBtn'),selectAll:$('selectAllProducts'),selectionCount:$('selectionCount')
 };
 let products=[], oldPhoto='';
+  function fromDb(r){
+  return {
+    id: String(r.id),
+    name: r.name || '',
+    cat: r.cat || '',
+    price: Number(r.price) || 0,
+    stock: Number(r.stock) || 0,
+    tag: r.tag || '',
+    desc: r.description || '',
+    photo: r.photo || '',
+    createdAt: r.created_at || ''
+  };
+}
 const DEFAULT_CATEGORIES=['Perfumes Dama','Perfumes Hombre','Maquillaje','Mantequillas Corporales','BIOAQUA'];
 const CAT_KEY='mystyle_categories_v1';
 let categories=[];
