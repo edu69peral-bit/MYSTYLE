@@ -189,9 +189,44 @@ async function addCategory(){
 function render(q=''){
  q=String(q).toLowerCase();
  const a=products.filter(p=>(p.name+' '+p.cat+' '+p.desc).toLowerCase().includes(q));
- e.count.textContent=a.length+' producto'+(a.length===1?'':'s');
- e.grid.innerHTML=a.length?a.map(p=>'<article class="card">'+(p.photo?'<img src="'+p.photo+'" alt="'+esc(p.name)+'" loading="lazy" decoding="async">'':'<div class="noimg">🛍️</div>')+'<div class="card-body"><span class="tag">'+esc(p.tag)+'</span><h3>'+esc(p.name)+'</h3><div class="desc">'+esc(p.desc)+'</div><div class="price">'+money(p.price)+'</div><div>Stock: '+Number(p.stock||0)+'</div><br><a class="btn btn-green" target="_blank" href="'+wa('Hola, me gustaría realizar un pedido. Producto: '+p.name+' - '+money(p.price))+'">Comprar</a><button class="add-cart-btn" type="button">🛒 Agregar al carrito</button></div></article>').join(''):'<p>No hay productos todavía. Pulsa ⚙️ Administrar para agregar uno.</p>';
- // Cart script uses its own button binding; render again after the DOM is updated.
+ e.count.textContent = a.length + ' producto' + (a.length === 1 ? '' : 's');
+
+e.grid.innerHTML = a.length
+  ? a.map(p => {
+      const photo = p.photo
+        ? '<img src="' + p.photo + '" alt="' + esc(p.name) + '" loading="lazy" decoding="async">'
+        : '<div class="noimg">🛍️</div>';
+
+      const buyLink = wa(
+        'Hola, me gustaría realizar un pedido. Producto: ' +
+        p.name +
+        ' - ' +
+        money(p.price)
+      );
+
+      return `
+        <article class="card">
+          ${photo}
+          <div class="card-body">
+            <span class="tag">${esc(p.tag)}</span>
+            <h3>${esc(p.name)}</h3>
+            <div class="desc">${esc(p.desc)}</div>
+            <div class="price">${money(p.price)}</div>
+            <div>Stock: ${Number(p.stock || 0)}</div>
+            <br>
+            <a class="btn btn-green" target="_blank" href="${buyLink}">
+              Comprar
+            </a>
+            <button class="add-cart-btn" type="button">
+              🛒 Agregar al carrito
+            </button>
+          </div>
+        </article>
+      `;
+    }).join('')
+  : '<p>No hay productos todavía. Pulsa ⚙️ Administrar para agregar uno.</p>';
+
+// Cart script uses its own button binding; render again after the DOM is updated.
  document.dispatchEvent(new Event('mystyle:catalogRendered'));
 }
 function selectedIds(){return [...e.list.querySelectorAll('input[data-select]')].filter(x=>x.checked).map(x=>x.value)}
