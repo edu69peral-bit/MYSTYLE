@@ -262,6 +262,7 @@ function clearForm(){e.id.value='';e.name.value='';e.price.value='';e.stock.valu
 
 
 async function loadProducts(){
+  alert('ENTRÓ A LOADPRODUCTS');
   try {
     const result = await supabase
       .from('products')
