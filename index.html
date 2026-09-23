@@ -151,7 +151,7 @@ let products=[], oldPhoto='';
     stock: Number(r.stock) || 0,
     tag: r.tag || '',
     desc: r.description || '',
-    photo: r.photo || '',
+    photo: r.photo || r.image || r.image_url || '',
     createdAt: r.created_at || ''
   };
 }
