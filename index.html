@@ -129,6 +129,13 @@ const SUPABASE_KEY='sb_publishable_m-1Sjmfi9wLHWcZNWDwiXA_k7QapdpQ';
 const supabase=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 const KEY='mystyle_inventory_v3', PHONE='573212338909';
 const $=id=>document.getElementById(id);
+  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({
+  '&':'&amp;',
+  '<':'&lt;',
+  '>':'&gt;',
+  '"':'&quot;',
+  "'":'&#39;'
+}[c]));
 const e={
 admin:$('admin'),openAdmin:$('openAdmin'),closeAdmin:$('closeAdmin'),grid:$('grid'),count:$('count'),search:$('search'),catalogCategories:$('catalogCategories'),newCat:$('newCat'),addCat:$('addCat'),categoryList:$('categoryList'),
 id:$('productId'),name:$('productName'),cat:$('productCat'),price:$('productPrice'),stock:$('productStock'),tag:$('productTag'),photo:$('productPhoto'),desc:$('productDesc'),list:$('adminList'),save:$('saveBtn'),clear:$('clearBtn'),export:$('exportBtn'),importFile:$('importFile'),heroWA:$('heroWA'),giftWA:$('giftWA'),floatWA:$('floatWA'),loginBox:$('loginBox'),adminTools:$('adminTools'),adminEmail:$('adminEmail'),adminPassword:$('adminPassword'),loginBtn:$('loginBtn'),loginMsg:$('loginMsg'),logoutBtn:$('logoutBtn'),adminUser:$('adminUser'),bulkDeleteBtn:$('bulkDeleteBtn'),selectAll:$('selectAllProducts'),selectionCount:$('selectionCount')
