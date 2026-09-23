@@ -133,6 +133,38 @@ const CAT_KEY='mystyle_categories_v1';
 let categories=[];
 try{categories=JSON.parse(localStorage.getItem('mystyle_categories_v1')||'null')||DEFAULT_CATEGORIES.slice()}catch(x){categories=DEFAULT_CATEGORIES.slice()}
 async function loadProducts(){
+  try {
+    const result = await supabase
+      .from('products')
+      .select('*')
+      .order('created_at', { ascending: true });
+
+    console.log('SUPABASE RESULTADO:', result);
+
+    if (result.error) {
+      console.error('ERROR SUPABASE:', result.error);
+      alert('Error de Supabase: ' + result.error.message);
+      return false;
+    }
+
+    products = (result.data || []).map(fromDb);
+
+    console.log('PRODUCTOS CARGADOS:', products);
+
+    render(e.search.value);
+
+    if (e.adminTools.style.display !== 'none') {
+      renderAdmin();
+    }
+
+    return true;
+
+  } catch (err) {
+    console.error('ERROR GENERAL:', err);
+    alert('Error cargando productos: ' + err.message);
+    return false;
+  }
+}
   try{
     // Mostrar inmediatamente la última copia disponible
     const cached=localStorage.getItem('mystyle_products_cache');
