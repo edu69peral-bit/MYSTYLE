@@ -265,6 +265,7 @@ async function migrateLocalIfNeeded(){
  await loadProducts();
 }
 async function saveProduct(){
+  alert('SAVE PRODUCT SE EJECUTÓ');
  if(!e.name.value.trim()){alert('Escribe el nombre del producto.');e.name.focus();return}
  const pid=e.id.value||Date.now().toString();
  const p={id:pid,name:e.name.value.trim(),cat:e.cat.value,price:Number(e.price.value)||0,stock:Number(e.stock.value)||0,tag:e.tag.value,desc:e.desc.value.trim(),photo:oldPhoto};
