@@ -137,6 +137,11 @@ const $=id=>document.getElementById(id);
   '"':'&quot;',
   "'":'&#39;'
 }[c]));
+  const money=n=>new Intl.NumberFormat('es-CO',{
+  style:'currency',
+  currency:'COP',
+  maximumFractionDigits:0
+}).format(Number(n)||0);
 const e={
 admin:$('admin'),openAdmin:$('openAdmin'),closeAdmin:$('closeAdmin'),grid:$('grid'),count:$('count'),search:$('search'),catalogCategories:$('catalogCategories'),newCat:$('newCat'),addCat:$('addCat'),categoryList:$('categoryList'),
 id:$('productId'),name:$('productName'),cat:$('productCat'),price:$('productPrice'),stock:$('productStock'),tag:$('productTag'),photo:$('productPhoto'),desc:$('productDesc'),list:$('adminList'),save:$('saveBtn'),clear:$('clearBtn'),export:$('exportBtn'),importFile:$('importFile'),heroWA:$('heroWA'),giftWA:$('giftWA'),floatWA:$('floatWA'),loginBox:$('loginBox'),adminTools:$('adminTools'),adminEmail:$('adminEmail'),adminPassword:$('adminPassword'),loginBtn:$('loginBtn'),loginMsg:$('loginMsg'),logoutBtn:$('logoutBtn'),adminUser:$('adminUser'),bulkDeleteBtn:$('bulkDeleteBtn'),selectAll:$('selectAllProducts'),selectionCount:$('selectionCount')
