@@ -150,6 +150,7 @@ try{categories=JSON.parse(localStorage.getItem('mystyle_categories_v1')||'null')
     products = (result.data || []).map(fromDb);
 
     console.log('PRODUCTOS CARGADOS:', products);
+    alert('Productos encontrados: ' + products.length);
 
     render(e.search.value);
 
