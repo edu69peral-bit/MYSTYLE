@@ -138,59 +138,7 @@ try{categories=JSON.parse(localStorage.getItem('mystyle_categories_v1')||'null')
 
   
 
-    console.log('PRODUCTOS CARGADOS:', products);
-    alert('Productos encontrados: ' + products.length);
-
-    render(e.search.value);
-
-    if (e.adminTools.style.display !== 'none') {
-      renderAdmin();
-    }
-
-    return true;
-
-  } catch (err) {
-    console.error('ERROR GENERAL:', err);
-    alert('Error cargando productos: ' + err.message);
-    return false;
-  }
-}
-  try{
-    // Mostrar inmediatamente la última copia disponible
-    const cached=localStorage.getItem('mystyle_products_cache');
-    if(cached){
-      try{
-        products=JSON.parse(cached)||[];
-        render(e.search.value);
-        if(e.adminTools.style.display!=='none')renderAdmin();
-      }catch(x){}
-    }
-
-    // Actualizar desde Supabase en segundo plano
-    const {data,error}=await supabase
-      .from('products')
-      .select('id,name,cat,price,stock,tag,description,photo,created_at')
-      .order('created_at',{ascending:true});
-
-    if(error){
-      console.error('Productos:',error);
-      return products.length>0;
-    }
-
-    products=(data||[]).map(fromDb);
-
-    // Guardar copia para la próxima visita
-    localStorage.setItem('mystyle_products_cache',JSON.stringify(products));
-
-    render(e.search.value);
-    if(e.adminTools.style.display!=='none')renderAdmin();
-
-    return true;
-  }catch(x){
-    console.error('Carga de productos:',x);
-    return products.length>0;
-  }
-}
+    
 
 function renderCategories(){
  e.catalogCategories.innerHTML='<button class="btn-light" data-cat="">Todos</button>'+categories.map(c=>'<button class="btn-light" data-cat="'+esc(c)+'">'+esc(c)+'</button>').join('');
