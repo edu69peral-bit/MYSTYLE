@@ -132,15 +132,43 @@ const DEFAULT_CATEGORIES=['Perfumes Dama','Perfumes Hombre','Maquillaje','Manteq
 const CAT_KEY='mystyle_categories_v1';
 let categories=[];
 try{categories=JSON.parse(localStorage.getItem('mystyle_categories_v1')||'null')||DEFAULT_CATEGORIES.slice()}catch(x){categories=DEFAULT_CATEGORIES.slice()}
-async function loadCategories(){try{const {data,error}=await supabase.from('categories').select('name').order('name');if(!error&&Array.isArray(data)){categories=data.map(x=>x.name);saveCategories();return true}}catch(x){} return false}
-function saveCategories(){try{localStorage.setItem(CAT_KEY,JSON.stringify(categories));return true}catch(x){return false}}
-async function addCategoryCloud(c){const {error}=await supabase.from('categories').insert({name:c});if(error){alert('No se pudo guardar la categoría: '+error.message);return false}return true}
-async function deleteCategory(c){if(!confirm('¿Eliminar la categoría '+c+'?'))return;const {error}=await supabase.from('categories').delete().eq('name',c);if(error){alert('No se pudo eliminar: '+error.message);return}categories=categories.filter(x=>x!==c);saveCategories();renderCategories();}
-const money=n=>new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:0}).format(Number(n)||0);
-const wa=t=>'https://wa.me/'+PHONE+'?text='+encodeURIComponent(t);
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-const toDb=p=>({id:String(p.id),name:p.name,cat:p.cat||'',price:Number(p.price)||0,stock:Number(p.stock)||0,tag:p.tag||'Normal',description:p.desc||p.description||'',photo:p.photo||''});
-const fromDb=p=>({id:String(p.id),name:p.name||'',cat:p.cat||'',price:Number(p.price)||0,stock:Number(p.stock)||0,tag:p.tag||'Normal',desc:p.description||'',photo:p.photo||''});
+async function loadProducts(){
+  try{
+    // Mostrar inmediatamente la última copia disponible
+    const cached=localStorage.getItem('mystyle_products_cache');
+    if(cached){
+      try{
+        products=JSON.parse(cached)||[];
+        render(e.search.value);
+        if(e.adminTools.style.display!=='none')renderAdmin();
+      }catch(x){}
+    }
+
+    // Actualizar desde Supabase en segundo plano
+    const {data,error}=await supabase
+      .from('products')
+      .select('id,name,cat,price,stock,tag,description,photo,created_at')
+      .order('created_at',{ascending:true});
+
+    if(error){
+      console.error('Productos:',error);
+      return products.length>0;
+    }
+
+    products=(data||[]).map(fromDb);
+
+    // Guardar copia para la próxima visita
+    localStorage.setItem('mystyle_products_cache',JSON.stringify(products));
+
+    render(e.search.value);
+    if(e.adminTools.style.display!=='none')renderAdmin();
+
+    return true;
+  }catch(x){
+    console.error('Carga de productos:',x);
+    return products.length>0;
+  }
+}
 
 function renderCategories(){
  e.catalogCategories.innerHTML='<button class="btn-light" data-cat="">Todos</button>'+categories.map(c=>'<button class="btn-light" data-cat="'+esc(c)+'">'+esc(c)+'</button>').join('');
