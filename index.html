@@ -274,15 +274,7 @@ function renderAdmin(){
 function clearForm(){e.id.value='';e.name.value='';e.price.value='';e.stock.value='';e.desc.value='';e.tag.value='Normal';e.cat.selectedIndex=0;e.photo.value='';oldPhoto='';e.save.textContent='💾Guardar producto'}
   alert('EL JAVASCRIPT SI ESTÁ FUNCIONANDO');
 
-async function loadProducts(){
-  try {
-    const result = await supabase
-      .from('products')
-      .select('*')
-      .order('created_at', { ascending: true });
 
-    // ...
-}
 async function loadProducts(){
   try {
     const result = await supabase
