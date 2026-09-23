@@ -132,7 +132,7 @@ const DEFAULT_CATEGORIES=['Perfumes Dama','Perfumes Hombre','Maquillaje','Manteq
 const CAT_KEY='mystyle_categories_v1';
 let categories=[];
 try{categories=JSON.parse(localStorage.getItem('mystyle_categories_v1')||'null')||DEFAULT_CATEGORIES.slice()}catch(x){categories=DEFAULT_CATEGORIES.slice()}
-async function loadProducts(){
+
   try {
     const result = await supabase
       .from('products')
