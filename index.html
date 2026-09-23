@@ -181,47 +181,42 @@ async function addCategory(){
  categories.push(c);saveCategories();e.newCat.value='';renderCategories();e.cat.value=c;alert('✅ Categoría agregada en todos los dispositivos.');
 }
 function render(q=''){
- q=String(q).toLowerCase();
- const a=products.filter(p=>(p.name+' '+p.cat+' '+p.desc).toLowerCase().includes(q));
- e.count.textContent = a.length + ' producto' + (a.length === 1 ? '' : 's');
+  q=String(q).toLowerCase();
 
-e.grid.innerHTML = a.length
-  ? a.map(p => {
-      const photo = p.photo
-        ? '<img src="' + p.photo + '" alt="' + esc(p.name) + '" loading="lazy" decoding="async">'
-        : '<div class="noimg">🛍️</div>';
+  const a=products.filter(p=>
+    (p.name+' '+p.cat+' '+p.desc).toLowerCase().includes(q)
+  );
 
-      const buyLink = wa(
-        'Hola, me gustaría realizar un pedido. Producto: ' +
-        p.name +
-        ' - ' +
-        money(p.price)
-      );
+  e.count.textContent=a.length+' producto'+(a.length===1?'':'s');
 
-      return `
-        <article class="card">
-          ${photo}
-          <div class="card-body">
-            <span class="tag">${esc(p.tag)}</span>
-            <h3>${esc(p.name)}</h3>
-            <div class="desc">${esc(p.desc)}</div>
-            <div class="price">${money(p.price)}</div>
-            <div>Stock: ${Number(p.stock || 0)}</div>
-            <br>
-            <a class="btn btn-green" target="_blank" href="${buyLink}">
-              Comprar
-            </a>
-            <button class="add-cart-btn" type="button">
-              🛒 Agregar al carrito
-            </button>
-          </div>
-        </article>
-      `;
-    }).join('')
-  : '<p>No hay productos todavía. Pulsa ⚙️ Administrar para agregar uno.</p>';
+  e.grid.innerHTML=a.length
+    ? a.map(p=>`
+      <article class="card">
+        <img
+          src="${p.photo}"
+          alt="${esc(p.name)}"
+          style="width:100%;height:220px;object-fit:contain;display:block;"
+        >
+        <div class="card-body">
+          <span class="tag">${esc(p.tag)}</span>
+          <h3>${esc(p.name)}</h3>
+          <div class="desc">${esc(p.desc)}</div>
+          <div class="price">${money(p.price)}</div>
+          <div>Stock: ${Number(p.stock||0)}</div>
+          <br>
+          <a class="btn btn-green" target="_blank"
+             href="${wa('Hola, me gustaría realizar un pedido. Producto: '+p.name+' - '+money(p.price))}">
+             Comprar
+          </a>
+          <button class="add-cart-btn" type="button">
+            🛒 Agregar al carrito
+          </button>
+        </div>
+      </article>
+    `).join('')
+    : '<p>No hay productos todavía.</p>';
 
-// Cart script uses its own button binding; render again after the DOM is updated.
- document.dispatchEvent(new Event('mystyle:catalogRendered'));
+  document.dispatchEvent(new Event('mystyle:catalogRendered'));
 }
 function selectedIds(){return [...e.list.querySelectorAll('input[data-select]')].filter(x=>x.checked).map(x=>x.value)}
 function updateSelectionUI(){const n=selectedIds().length; e.selectionCount.textContent=n?`${n} seleccionado${n===1?'':'s'}`:''; const all=[...e.list.querySelectorAll('input[data-select]')]; e.selectAll.checked=all.length>0&&all.every(x=>x.checked); e.selectAll.indeterminate=all.length>0&&n>0&&n<all.length;}
