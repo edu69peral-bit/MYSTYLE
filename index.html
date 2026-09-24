@@ -292,6 +292,12 @@ e.save.onclick=()=>{
   console.log('GUARDAR FUE PRESIONADO');
   saveProduct();
 };
+e.list.onclick=x=>{
+  const a=x.target.closest('[data-edit]');
+  const b=x.target.closest('[data-delete]');
+  if(a)editProduct(a.dataset.edit);
+  if(b)deleteProduct(b.dataset.delete);
+};
 e.clear.onclick=clearForm;
   const wa=text=>'https://wa.me/'+PHONE+'?text='+encodeURIComponent(text);
 e.heroWA.href=wa('Hola, me gustaría realizar un pedido.');e.giftWA.href=wa('Hola, me gustaría realizar un pedido.');e.floatWA.href=wa('Hola, me gustaría realizar un pedido.');
