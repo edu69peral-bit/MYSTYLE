@@ -296,7 +296,10 @@ e.list.onclick=x=>{
   const a=x.target.closest('[data-edit]');
   const b=x.target.closest('[data-delete]');
   if(a)editProduct(a.dataset.edit);
-  if(b)deleteProduct(b.dataset.delete);
+ if(b){
+  console.log('ELIMINAR FUE PRESIONADO:', b.dataset.delete);
+  deleteProduct(b.dataset.delete);
+}
 };
 e.clear.onclick=clearForm;
   const wa=text=>'https://wa.me/'+PHONE+'?text='+encodeURIComponent(text);
