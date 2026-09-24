@@ -299,7 +299,10 @@ e.openAdmin.onclick=openAdmin;
 if(new URLSearchParams(location.search).get('admin')==='1'){e.openAdmin.style.display='inline-block';setTimeout(openAdmin,150)}
 const viewCatalogBtn=document.getElementById('viewCatalogBtn');if(viewCatalogBtn)viewCatalogBtn.addEventListener('click',function(ev){ev.preventDefault();document.getElementById('catalogo').scrollIntoView({behavior:'smooth',block:'start'});});
 e.closeAdmin.onclick=()=>e.admin.style.display='none';
-e.save.onclick=saveProduct;
+e.save.onclick=()=>{
+  console.log('GUARDAR FUE PRESIONADO');
+  saveProduct();
+};
 e.clear.onclick=clearForm;
   const wa=text=>'https://wa.me/'+PHONE+'?text='+encodeURIComponent(text);
 e.heroWA.href=wa('Hola, me gustaría realizar un pedido.');e.giftWA.href=wa('Hola, me gustaría realizar un pedido.');e.floatWA.href=wa('Hola, me gustaría realizar un pedido.');
