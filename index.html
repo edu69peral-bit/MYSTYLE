@@ -268,7 +268,7 @@ async function migrateLocalIfNeeded(){
  await loadProducts();
 }
 async function saveProduct(){
-  alert('SAVE PRODUCT SE EJECUTÓ');
+
  if(!e.name.value.trim()){alert('Escribe el nombre del producto.');e.name.focus();return}
  const pid=e.id.value||Date.now().toString();
  const p={id:pid,name:e.name.value.trim(),cat:e.cat.value,price:Number(e.price.value)||0,stock:Number(e.stock.value)||0,tag:e.tag.value,desc:e.desc.value.trim(),photo:oldPhoto};
@@ -292,10 +292,9 @@ async function logout(){await supabase.auth.signOut();e.adminTools.style.display
 e.openAdmin.onclick=openAdmin;
 if(new URLSearchParams(location.search).get('admin')==='1'){e.openAdmin.style.display='inline-block';setTimeout(openAdmin,150)}
 const viewCatalogBtn=document.getElementById('viewCatalogBtn');if(viewCatalogBtn)viewCatalogBtn.addEventListener('click',function(ev){ev.preventDefault();document.getElementById('catalogo').scrollIntoView({behavior:'smooth',block:'start'});});
-e.closeAdmin.onclick=()=>e.admin.style.display='none';e.save.onclick=()=>{
-  alert('BOTÓN GUARDAR FUNCIONA');
-  saveProduct();
-};e.clear.onclick=clearForm;e.export.onclick=exportProducts;e.importFile.onchange=x=>importProducts(x.target.files[0]);e.search.oninput=x=>render(x.target.value);if(e.addCat)e.addCat.onclick=addCategory;if(e.newCat)e.newCat.addEventListener('keydown',x=>{if(x.key==='Enter')addCategory()});e.loginBtn.onclick=login;e.logoutBtn.onclick=logout;e.bulkDeleteBtn.onclick=bulkDelete;e.selectAll.onchange=()=>{e.list.querySelectorAll('input[data-select]').forEach(x=>x.checked=e.selectAll.checked);updateSelectionUI()};e.list.onclick=x=>{const a=x.target.closest('[data-edit]'),b=x.target.closest('[data-delete]');if(a)editProduct(a.dataset.edit);if(b)deleteProduct(b.dataset.delete)};e.list.onchange=x=>{if(x.target.matches('input[data-select]'))updateSelectionUI()};
+e.closeAdmin.onclick=()=>e.admin.style.display='none';
+e.save.onclick=saveProduct;
+e.clear.onclick=clearForm;
   const wa=text=>'https://wa.me/'+PHONE+'?text='+encodeURIComponent(text);
 e.heroWA.href=wa('Hola, me gustaría realizar un pedido.');e.giftWA.href=wa('Hola, me gustaría realizar un pedido.');e.floatWA.href=wa('Hola, me gustaría realizar un pedido.');
 supabase.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_OUT'){e.adminTools.style.display='none';e.loginBox.style.display='block'} });
