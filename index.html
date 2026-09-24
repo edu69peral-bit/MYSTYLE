@@ -249,8 +249,7 @@ alert('LLEGÓ A LOADPRODUCTS');
 
 
 async function loadProducts(){
-  alert('CARGANDO PRODUCTOS...');
-  alert('ENTRÓ A LOADPRODUCTS');
+ 
   
 
  const {data,error}=await supabase.from('products').select('id,name,cat,price,stock,tag,description,photo,created_at').order('created_at',{ascending:true});
