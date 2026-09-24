@@ -253,7 +253,7 @@ async function loadProducts(){
  const {data,error}=await supabase.from('products').select('id,name,cat,price,stock,tag,description,photo,created_at').order('created_at',{ascending:true});
  if(error){console.error(error);alert('No se pudieron cargar los productos desde Supabase. Revisa la conexión.');return false}
  products=(data||[]).map(fromDb); render(e.search.value); if(e.adminTools.style.display!=='none')renderAdmin(); return true;
- alert(products[0]?.photo ? products[0].photo.substring(0,120) : 'NO HAY FOTO'); 
+
 }
 async function migrateLocalIfNeeded(){
  if(products.length) return;
