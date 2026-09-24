@@ -158,7 +158,18 @@ let products=[], oldPhoto='';
     createdAt: r.created_at || ''
   };
 }
- function toDb(p){
+function toDb(p){
+  return {
+    id: String(p.id),
+    name: p.name || '',
+    cat: p.cat || '',
+    price: Number(p.price) || 0,
+    stock: Number(p.stock) || 0,
+    tag: p.tag || '',
+    description: p.desc || '',
+    photo: p.photo || ''
+  };
+}
  
   return {
     id: String(r.id),
